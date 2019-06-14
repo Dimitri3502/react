@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import {
-    Card, CardImg, CardBody,
-    CardTitle, Button
-} from 'reactstrap';
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPen } from '@fortawesome/free-solid-svg-icons';
+import React, { Component } from 'react';
+import { Button, Card, CardBody, CardImg, CardTitle } from 'reactstrap';
+
 
 class RecipeDetail extends Component {
     state = {
@@ -15,21 +13,26 @@ class RecipeDetail extends Component {
 
     toggleEditMode = () => {
         this.setState({ editMode: !this.state.editMode });
-        if (this.props.addMode){
+        if (this.props.addMode) {
             this.props.add(this.state.recipe);
         }
+        this.state.editMode && this.props.update(this.state.recipe);
     };
 
     onPictureChange = event => {
-        this.setState({recipe: {...this.state.recipe, picture: event.target.value}})
+
+        this.setState({ recipe: { ...this.state.recipe, picture: event.target.value } })
+
     } // pour modifier seulmenet l'image
 
     onNameChange = event => {
-        this.setState({recipe: {...this.state.recipe, name: event.target.value}})
+        this.setState({ recipe: { ...this.state.recipe, name: event.target.value } });
+
     } // pour modifier seulmenet le nom
 
     onDescriptionChange = event => {
-        this.setState({recipe: {...this.state.recipe, description: event.target.value}})
+        this.setState({ recipe: { ...this.state.recipe, description: event.target.value } })
+
     } // pour modifier seulmenet la desxiptiuon
 
     render() {
@@ -37,27 +40,33 @@ class RecipeDetail extends Component {
         return (
             <Card>
                 <CardImg top width="100%" src={recipe && recipe.picture} alt="Card image cap" />
-                {this.state.editMode && <input value={recipe && recipe.picture} onChange={this.onPictureChange}/>}
-        <CardBody>
+                {this.state.editMode && <input value={recipe && recipe.picture} onChange={this.onPictureChange} />}
+                <CardBody>
                     {
                         this.state.editMode ?
-                            <input value={recipe && recipe.name} onChange={this.onNameChange}/> :
+                            <input value={recipe && recipe.name} onChange={this.onNameChange} /> :
                             <CardTitle>{recipe.name}</CardTitle>
                     }
                     {
                         this.state.editMode ?
-                            <textarea value={recipe && recipe.description} onChange={this.onDescriptionChange}/> :
+                            <textarea value={recipe && recipe.description} onChange={this.onDescriptionChange} /> :
                             <CardTitle>{recipe && recipe.description}</CardTitle>
                     }
-                    { 
-                        this.props.recipe && <Button onClick={this.props.delete(recipe.id)}>}<FontAwesomeIcon icon={faTrash} /></Button>
+                    {
+                        this.props.recipe && <Button onClick={this.props.delete(recipe.id)}><FontAwesomeIcon icon={faTrash} /></Button>
                     }
                     <Button onClick={this.toggleEditMode}><FontAwesomeIcon icon={faPen} /></Button>
-
                 </CardBody>
             </Card>
         );
     }
 }
 
+function Tableau() {
+    return (
+        <div>
+            <Tableau />
+        </div>
+    );
+}
 export default RecipeDetail;
